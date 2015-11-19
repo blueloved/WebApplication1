@@ -17,54 +17,86 @@
 {
     <input type="search" name="search" value="" placeholder="Please insert a keyword"/>
     <input type="submit" value="Search!!"/>
+
+    <br/>
+
+    <table class="table">
+        <tr>
+            <th class="text-center">
+                批次<br/>刪除
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            <th></th>
+        </tr>
+
+        @{
+            var data = Model.ToArray();
+        }
+        @for (var i = 0; i < data.Length; i++)
+        {
+            <tr>
+                <td class="text-center">
+                    @*<input type="checkbox" name="ProductId" value="@item.ProductId"/>*@
+                    <input type="checkbox" name="ProductId" value="@data[i].ProductId"/>
+                </td>
+
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.ProductName)*@
+                    @Html.HiddenFor(modelItem => data[i].ProductId)
+                    @Html.EditorFor(modelItem => data[i].ProductName)
+                </td>
+                <td>
+                    @*@String.Format("{0:C}", item.Price)*@
+                    @*@Html.DisplayFor(modelItem => item.Price)*@
+                    @Html.EditorFor(modelItem => data[i].Price)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Active)*@
+                    @Html.EditorFor(modelItem => data[i].Active)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.Stock)*@
+                    @Html.EditorFor(modelItem => data[i].Stock)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new {id = item.ProductId}) |
+                @Html.ActionLink("Details", "Details", new {id = item.ProductId}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.ProductId})*@
+
+                    @Html.ActionLink("Edit", "Edit", new {id = data[i].ProductId}) |
+                    @Html.ActionLink("Details", "Details", new {id = data[i].ProductId}) |
+                    @Html.ActionLink("Delete", "Delete", new {id = data[i].ProductId})
+
+
+                </td>
+            </tr>
+        }
+        <tr>
+            <td class="text-center">
+                @*<button type="submit">刪除</button>*@
+                <button type="submit">批次作業</button>
+            </td>
+            <td></td>
+            <td>
+                <a href="@Url.Action("BatchUpdate")" class="btn btn-primary">Update Price to $5</a>
+            </td>
+        </tr>
+
+    </table>
 }
-
-<br/>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Active)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Stock)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @*@String.Format("{0:C}", item.Price)*@
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Active)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Stock)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {id = item.ProductId}) |
-            @Html.ActionLink("Details", "Details", new {id = item.ProductId}) |
-            @Html.ActionLink("Delete", "Delete", new {id = item.ProductId})
-        </td>
-    </tr>
-}
-    <tr>
-        <td></td>
-        <td>
-            <a href="@Url.Action("BatchUpdate")" class="btn btn-primary">Update Price to $5</a>
-        </td>
-    </tr>
-
-</table>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Omu.ValueInjecter;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -75,6 +76,46 @@ namespace WebApplication1.Controllers
 
             return View(data);
         }
+
+        [HttpPost]
+        public ActionResult Index(int[] ProductId, FormCollection form)
+        {
+            //foreach (var id in ProductId)
+            //{
+            //    repo.Delete(repo.GetByID(id));
+            //}
+
+            //repo.UnitOfWork.Commit();
+
+            //return RedirectToAction("Index");
+
+            IList<Product> data = new List<Product>();
+
+            if (ModelState.IsValid)
+            {
+                foreach (var item in data)
+                {
+                    var dbItem = repo.GetByID(item.ProductId);
+
+                    dbItem.InjectFrom(item);
+                }
+
+                if (ProductId != null)
+                {
+                    foreach (var id in ProductId)
+                    {
+                        repo.Delete(repo.GetByID(id));
+                    }
+                }
+
+                repo.UnitOfWork.Commit();
+
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
 
         public ActionResult BatchUpdate()
         {
@@ -165,9 +206,14 @@ namespace WebApplication1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        //public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        public ActionResult Edit(int? id, FormCollection form)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            var product = repo.GetByID(id);
+            var includeProperties = "ProductId,ProductName,Price,Active,Stock".Split(',');
+
+            if (TryUpdateModel<Product>(product, includeProperties))
             {
                 //db.Entry(product).State = EntityState.Modified;
                 ///** Use Repository **///

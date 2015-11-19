@@ -8,7 +8,12 @@ namespace WebApplication1.Models
 	{
         public override IQueryable<Product> All()
         {
-            return base.All().Where(p => p.Active == true);
+            return base.All().Where(p => p.Active == true);   
+        }
+
+        public IQueryable<Product> Get取得前面n筆範例資料(int n)
+        {
+            return this.All().OrderBy(p => p.ProductId).Take(n);
         }
 
 	    public IQueryable<Product> All(bool IsGetAll)

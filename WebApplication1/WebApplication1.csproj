@@ -159,6 +159,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\MyFilter.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -363,6 +364,12 @@
     <Content Include="Views\Shared\Debug.cshtml" />
     <Content Include="Views\AR\Index.cshtml" />
     <Content Include="Views\MB\Index.cshtml" />
+    <Content Include="Views\Shared\Error_DBEntityValidation.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
+    <Content Include="Views\Home\ViewTest.cshtml" />
+    <Content Include="Views\Home\_Layout.cshtml" />
+    <Content Include="Views\Home\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />
